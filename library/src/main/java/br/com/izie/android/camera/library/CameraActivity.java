@@ -149,9 +149,13 @@ public class CameraActivity extends Activity {
         }
     }
 
-
-    public static void showTakePicture(Intent intent, Activity activity, int requestCode) {
-        intent.setClass(activity, CameraActivity.class);
+    public static void showTakePicture(Activity activity, int requestCode, Bundle bundle, int width, int height) {
+        Intent intent = new Intent(activity, CameraActivity.class);
+        if (bundle != null) {
+            intent.putExtras(bundle);
+        }
+        intent.putExtra("outputWidth", width);
+        intent.putExtra("outputHeight", height);
         activity.startActivityForResult(intent, requestCode);
     }
 

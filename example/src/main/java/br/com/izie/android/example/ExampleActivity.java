@@ -30,7 +30,7 @@ public class ExampleActivity extends Activity {
         findViewById(R.id.bt_take_picture).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(ExampleActivity.this, CameraActivity.class), REQUEST_CODE);
+                CameraActivity.showTakePicture(ExampleActivity.this, REQUEST_CODE, getIntent().getExtras(), 10, 10);
             }
         });
         Log.d("ExampleActivity", "onCreate()");
@@ -41,7 +41,7 @@ public class ExampleActivity extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                Bitmap bitmap = decodeSampledBitmap(convertMediaUriToPath(data.getData()), 800, 800);
+                Bitmap bitmap = decodeSampledBitmap(convertMediaUriToPath(data.getData()), 100, 100);
                 if (bitmap == null) {
                     ((ImageView) findViewById(R.id.iv_picture)).setImageResource(android.R.drawable.ic_delete);
                 } else {
@@ -70,7 +70,6 @@ public class ExampleActivity extends Activity {
         return inSampleSize;
     }
 
-
     public Bitmap decodeSampledBitmap(String filePath, int reqWidth, int reqHeight) {
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
@@ -79,7 +78,6 @@ public class ExampleActivity extends Activity {
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeFile(filePath, options);
     }
-
 
     public String convertMediaUriToPath(Uri uri) {
         String[] proj = {MediaStore.Images.Media.DATA};
