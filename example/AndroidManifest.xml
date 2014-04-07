@@ -2,14 +2,21 @@
 
     <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="17"/>
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+
+    <uses-feature android:name="android.hardware.camera" android:required="true"/>
+
     <application>
-        <activity android:label="Example Activity" android:name="br.com.izie.android.example.ExampleActivity">
+        <activity android:configChanges="orientation|keyboardHidden|keyboard|screenSize" android:label="Example Activity" android:name="br.com.izie.android.example.ExampleActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:label="Library Activity" android:name="br.com.izie.android.camera.library.CameraActivity">
-        </activity>
+        <!--<activity-->
+            <!--android:name="br.com.izie.android.camera.library.CameraActivity"-->
+            <!--android:label="Library Activity" />-->
+        <activity android:configChanges="orientation|keyboardHidden|keyboard|screenSize" android:label="Library Activity" android:name="br.com.izie.android.camera.library.CameraActivity"/>
     </application>
 </manifest>

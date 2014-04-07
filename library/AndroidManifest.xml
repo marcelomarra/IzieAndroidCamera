@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="br.com.izie.android.camera.library"
-          android:versionCode="1"
-          android:versionName="1.0-SNAPSHOT">
+    package="br.com.izie.android.camera.library"
+    android:versionCode="1"
+    android:versionName="1.0-SNAPSHOT">
 
-    <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="17"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="17" />
 
     <application>
-        <activity android:name=".CameraActivity"
-                  android:label="Library Activity">
-        </activity>
+        <activity
+            android:name=".CameraActivity"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize"
+            android:label="Library Activity" />
     </application>
 </manifest>
