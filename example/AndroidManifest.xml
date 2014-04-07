@@ -14,9 +14,6 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <!--<activity-->
-            <!--android:name="br.com.izie.android.camera.library.CameraActivity"-->
-            <!--android:label="Library Activity" />-->
-        <activity android:configChanges="orientation|keyboardHidden|keyboard|screenSize" android:label="Library Activity" android:name="br.com.izie.android.camera.library.CameraActivity"/>
+        <activity android:configChanges="orientation|keyboardHidden|keyboard|screenSize" android:excludeFromRecents="true" android:label="Library Activity" android:name="br.com.izie.android.camera.library.CameraActivity" android:noHistory="true" android:screenOrientation="portrait" android:theme="@android:style/Theme.NoTitleBar.Fullscreen" android:windowSoftInputMode="stateAlwaysHidden"/>
     </application>
 </manifest>

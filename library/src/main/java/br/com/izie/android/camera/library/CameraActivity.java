@@ -4,20 +4,28 @@ import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.hardware.Camera;
+import android.media.ExifInterface;
 import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Display;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 
+import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -47,9 +55,9 @@ public class CameraActivity extends Activity {
 
         // Create our Preview view and set it as the content of our activity.
         mPreview = new CameraPreview(this, mCamera);
-        FrameLayout preview = (FrameLayout) findViewById(R.id.camera_preview);
+        FrameLayout preview = (FrameLayout) findViewById(R.id.camera_fl_preview);
         preview.addView(mPreview);
-        Button captureButton = (Button) findViewById(R.id.button_capture);
+        Button captureButton = (Button) findViewById(R.id.camera_bt_capture);
         captureButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -63,9 +71,14 @@ public class CameraActivity extends Activity {
         Camera.Parameters params = mCamera.getParameters();
 // set the focus mode
         params.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
+        params.setFlashMode(Camera.Parameters.FLASH_MODE_AUTO);
 // set Camera parameters
         params.setPictureSize(getIntent().getIntExtra("outputWidth", 1024), getIntent().getIntExtra("outputWidth", 768));
         mCamera.setParameters(params);
+        Display display = getWindowManager().getDefaultDisplay();
+        int smallestSize = Math.min(display.getHeight(), display.getWidth());
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(smallestSize, smallestSize);
+        findViewById(R.id.camera_fl_preview).setLayoutParams(layoutParams);
     }
 
     public String convertMediaUriToPath(Uri uri) {
@@ -78,22 +91,51 @@ public class CameraActivity extends Activity {
         return path;
     }
 
+
+    private int findRotation(String filePath) throws IOException {
+        ExifInterface exif = new ExifInterface(filePath);
+        int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+        int rotate = 0;
+        switch (orientation) {
+            case ExifInterface.ORIENTATION_ROTATE_270:
+                rotate -= 90;
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_180:
+                rotate += 180;
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_90:
+                rotate += 90;
+                break;
+        }
+        return rotate;
+    }
+
     private Camera.PictureCallback mPicture = new Camera.PictureCallback() {
 
         @Override
         public void onPictureTaken(byte[] data, Camera camera) {
-            String pictureFile = getOutputMediaFile(MEDIA_TYPE_IMAGE);
-            ContentValues values = new ContentValues();
-            values.put(MediaStore.Images.Media.TITLE, pictureFile);
-            Uri uri = getContentResolver().insert(
-                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-            if (pictureFile == null) {
-                Log.d(TAG, "Error creating media file, check storage permissions: ");
-                return;
-            }
             try {
+                InputStream is = new ByteArrayInputStream(data);
+                Bitmap bmp = BitmapFactory.decodeStream(is);
+                // Getting width & height of the given image.
+                int w = bmp.getWidth();
+                int h = bmp.getHeight();
+                // Setting post rotate to 90
+                Matrix mtx = new Matrix();
+                mtx.postRotate(90);
+                // Rotating Bitmap
+                Bitmap rotatedBMP = Bitmap.createBitmap(bmp, 0, 0, w, h, mtx, true);
+                String pictureFile = getOutputMediaFile(MEDIA_TYPE_IMAGE);
+                ContentValues values = new ContentValues();
+                values.put(MediaStore.Images.Media.TITLE, pictureFile);
+                Uri uri = getContentResolver().insert(
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+                if (pictureFile == null) {
+                    Log.d(TAG, "Error creating media file, check storage permissions: ");
+                    return;
+                }
                 FileOutputStream fos = new FileOutputStream(convertMediaUriToPath(uri));
-                fos.write(data);
+                rotatedBMP.compress(Bitmap.CompressFormat.JPEG, 100, fos);
                 fos.close();
                 getIntent().setData(uri);
                 setResult(RESULT_OK, getIntent());

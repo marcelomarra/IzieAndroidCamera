@@ -85,4 +85,17 @@
       <module>example</module>
       <module>tests</module>
   </modules>
+
+    <distributionManagement>
+        <repository>
+            <id>central</id>
+            <name>Releases</name>
+            <url>${url.releases}</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <name>Snapshots</name>
+            <url>${url.snapshots}</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>

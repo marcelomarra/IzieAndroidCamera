@@ -16,8 +16,13 @@
 
     <application>
         <activity
+            android:screenOrientation="portrait"
             android:name=".CameraActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize"
-            android:label="Library Activity" />
+            android:excludeFromRecents="true"
+            android:label="Library Activity"
+            android:noHistory="true"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:windowSoftInputMode="stateAlwaysHidden" />
     </application>
 </manifest>
