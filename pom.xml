@@ -77,8 +77,10 @@
 
     <scm>
         <url>https://github.com/${github.username}/${github.permalink}</url>
-        <connection>scm:git:https://github.com/${github.username}/${github.permalink}.git</connection>
-        <developerConnection>scm:git:git@github.com:${github.username}/${github.permalink}.git</developerConnection>
+        <!--<connection>scm:git:https://username@github.com/my-project.git</connection>-->
+        <connection>scm:git:https://${github.username}@github.com/${github.permalink}.git</connection>
+        <!--<developerConnection>scm:git:https://username@github.com/my-project.git</developerConnection>-->
+        <developerConnection>scm:git:https://${github.username}@github.com/${github.permalink}.git</developerConnection>
     </scm>
   <modules>
     <module>library</module>
