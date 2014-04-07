@@ -60,13 +60,13 @@
     </build>
 
     <dependencies>
-       <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>library</artifactId>
-            <version>${project.version}</version>
-            <type>jar</type>
-            <scope>compile</scope>
-       </dependency>
+       <!--<dependency>-->
+            <!--<groupId>${project.groupId}</groupId>-->
+            <!--<artifactId>library</artifactId>-->
+            <!--<version>${project.version}</version>-->
+            <!--<type>jar</type>-->
+            <!--<scope>compile</scope>-->
+       <!--</dependency>-->
 
        <dependency>
             <groupId>com.google.android</groupId>
