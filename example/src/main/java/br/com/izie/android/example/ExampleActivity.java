@@ -11,10 +11,9 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import br.com.izie.android.camera.library.CameraActivity;
 import br.com.izie.android.camera.example.R;
+import br.com.izie.android.camera.library.CameraActivity;
 
 
 /**
@@ -31,7 +30,7 @@ public class ExampleActivity extends Activity {
         findViewById(R.id.bt_take_picture).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CameraActivity.showTakePicture(getIntent(), ExampleActivity.this, REQUEST_CODE);
+                startActivityForResult(new Intent(ExampleActivity.this, CameraActivity.class), REQUEST_CODE);
             }
         });
         Log.d("ExampleActivity", "onCreate()");
@@ -42,9 +41,14 @@ public class ExampleActivity extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                ((ImageView) findViewById(R.id.iv_picture)).setImageBitmap(decodeSampledBitmap(convertMediaUriToPath(data.getData()), 100, 100));
+                Bitmap bitmap = decodeSampledBitmap(convertMediaUriToPath(data.getData()), 800, 800);
+                if (bitmap == null) {
+                    ((ImageView) findViewById(R.id.iv_picture)).setImageResource(android.R.drawable.ic_delete);
+                } else {
+                    ((ImageView) findViewById(R.id.iv_picture)).setImageBitmap(bitmap);
+                }
             } else {
-                ((TextView) findViewById(R.id.tv_title)).setText("Error");
+                ((ImageView) findViewById(R.id.iv_picture)).setImageResource(android.R.drawable.ic_dialog_alert);
             }
         }
     }
