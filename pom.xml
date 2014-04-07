@@ -45,7 +45,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <github.username>marcelomarra</github.username>
-        <github.permalink>https://github.com/marcelomarra/IzieAndroidCamera</github.permalink>
+        <github.permalink>IzieAndroidCamera</github.permalink>
         <android.maven.plugin.version>3.8.1</android.maven.plugin.version>
         <platform.version>4.1.1.4</platform.version>
     </properties>
