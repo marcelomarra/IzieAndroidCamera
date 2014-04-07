@@ -3,8 +3,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>br.com.izie.android</groupId>
-        <artifactId>camera-parent</artifactId>
+        <groupId>br.com.izie.android.camera</groupId>
+        <artifactId>parent</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
@@ -62,8 +62,9 @@
         <dependency>
             <groupId>com.google.android</groupId>
             <artifactId>android</artifactId>
+            <version>${platform.version}</version>
+            <scope>provided</scope>
         </dependency>
-
         <dependency>
             <groupId>com.google.android</groupId>
             <artifactId>annotations</artifactId>

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="br.com.izie.android.camera"
+          package="br.com.izie.android.camera.library"
           android:versionCode="1"
           android:versionName="1.0-SNAPSHOT">
 
     <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="17"/>
 
     <application>
-        <activity android:name=".LibraryActivity"
+        <activity android:name=".CameraActivity"
                   android:label="Library Activity">
         </activity>
     </application>

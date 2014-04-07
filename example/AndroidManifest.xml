@@ -1,18 +1,15 @@
-<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="br.com.izie.android.camera.example"
-          android:versionCode="1"
-          android:versionName="1.0-SNAPSHOT">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0-SNAPSHOT" package="br.com.izie.android.camera.example">
 
     <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="17"/>
 
     <application>
-        <activity android:name="br.com.izie.android.camera.ExampleActivity"
-                  android:label="Example Activity">
+        <activity android:label="Example Activity" android:name="br.com.izie.android.example.ExampleActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+        <activity android:label="Library Activity" android:name="br.com.izie.android.camera.library.CameraActivity">
         </activity>
     </application>
 </manifest>
